@@ -16,7 +16,7 @@ function setupNotifications(userId) {
     const notificationsSetup = localStorage.getItem('notificationsSetup');
     
     if (!notificationsSetup) {
-        console.log('Setting up notifications for the first time...');
+        console.log('Setting up daily notification...');
         
         cordova.plugins.notification.local.hasPermission(function(granted) {
             console.log('Permission granted: ' + granted);
@@ -25,11 +25,11 @@ function setupNotifications(userId) {
                 cordova.plugins.notification.local.requestPermission(function(granted) {
                     console.log('Permission request result: ' + granted);
                     if (granted) {
-                        scheduleNotifications(userId);
+                        scheduleDailyNotification(userId);
                     }
                 });
             } else {
-                scheduleNotifications(userId);
+                scheduleDailyNotification(userId);
             }
         });
     } else {
@@ -37,43 +37,54 @@ function setupNotifications(userId) {
     }
 }
 
-function scheduleNotifications(userId) {
-    console.log('Scheduling notifications...');
+function scheduleDailyNotification(userId) {
+    console.log('Scheduling daily notification at noon...');
     
-    // Use the notification manager
     if (window.notificationManager) {
         // Cancel any existing notifications first
         window.notificationManager.cancelAllNotifications();
         
-        // Schedule a test notification
-        window.notificationManager.scheduleNotification({
-            title: 'Test Notification',
-            text: 'Notifications are working!',
-            trigger: { at: new Date(Date.now() + 10000) }
-        });
+        // Calculate noon today or tomorrow
+        const now = new Date();
+        const noon = new Date();
+        noon.setHours(12, 0, 0, 0);
         
-        // Schedule recurring notifications
-        window.notificationManager.scheduleRecurringNotifications({
-            title: `Hi ${userId}, time for your experiment!`,
-            text: 'Your jsPsych task is ready',
-            interval: 1 // Every minute for testing
-        });
-        
-        // Schedule multiple notifications
-        const schedules = [];
-        for (let i = 1; i <= 5; i++) {
-            schedules.push({
-                title: `Reminder ${i}`,
-                text: `This is notification ${i} - scheduled for ${i} minute(s) from now`,
-                time: new Date(Date.now() + (i * 60000))
-            });
+        // If it's already past noon, schedule for tomorrow
+        if (now.getHours() >= 12) {
+            noon.setDate(noon.getDate() + 1);
         }
-        window.notificationManager.scheduleMultipleNotifications(schedules);
+        
+        // Schedule daily notification at noon
+        window.notificationManager.scheduleRecurringNotifications({
+            title: 'jsPsych Experiment Reminder',
+            text: `Hi ${userId}, time to complete your daily experiment!`,
+            interval: 'daily',
+            startTime: noon
+        });
         
         localStorage.setItem('notificationsSetup', 'true');
-        console.log('Notification setup complete');
+        console.log('Daily notification scheduled for noon');
     }
 }
+
+// Test notification function for debug screen
+window.testNotification = function() {
+    console.log('Testing notification...');
+    
+    if (!window.cordova || !window.cordova.plugins || !window.cordova.plugins.notification) {
+        alert('Notification plugin not available');
+        return;
+    }
+    
+    cordova.plugins.notification.local.schedule({
+        title: 'Test Notification',
+        text: 'This is a test notification!',
+        foreground: true,
+        trigger: { in: 3, unit: 'second' }
+    });
+    
+    alert('Notification scheduled for 3 seconds from now!');
+};
 
 // Initialize the app
 async function initializeApp() {
@@ -83,10 +94,6 @@ async function initializeApp() {
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.notification) {
         cordova.plugins.notification.local.on('click', function(notification) {
             console.log('Notification clicked:', notification);
-        });
-        
-        cordova.plugins.notification.local.on('trigger', function(notification) {
-            console.log('Notification triggered:', notification);
         });
     }
     
@@ -160,14 +167,13 @@ async function initializeApp() {
     timeline.push({
         type: jsPsychHtmlButtonResponse,
         stimulus: `
-            <h3>Notification Test</h3>
-            <p>Notifications have been scheduled. You should receive:</p>
-            <ul style="text-align: left;">
-                <li>A test notification in 10 seconds</li>
-                <li>5 notifications over the next 5 minutes</li>
-                <li>Recurring notifications every minute</li>
-            </ul>
-            <p>Check your notification bar!</p>
+            <h3>Notification Settings</h3>
+            <p>Daily reminders have been scheduled for 12:00 PM (noon).</p>
+            <p>Want to test notifications?</p>
+            <button onclick="testNotification()" style="padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                Send Test Notification
+            </button>
+            <p style="font-size: 14px; color: #666;">Test notification will appear in 3 seconds</p>
         `,
         choices: ['Continue']
     });
@@ -273,37 +279,6 @@ async function initializeApp() {
         });
     } else {
         // No DataPipe - simple completion screen
-        // Add this to your timeline for testing
-timeline.push({
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `
-        <h3>Direct Notification Test</h3>
-        <p>Click the button below to schedule a test notification.</p>
-        <button onclick="testNotification()" style="padding: 10px 20px; margin: 10px;">
-            Test Notification Now
-        </button>
-    `,
-    choices: ['Continue']
-});
-
-// Add this function to the global scope
-window.testNotification = function() {
-    console.log('Testing notification...');
-    
-    if (!window.cordova || !window.cordova.plugins || !window.cordova.plugins.notification) {
-        alert('Notification plugin not available');
-        return;
-    }
-    
-    cordova.plugins.notification.local.schedule({
-        title: 'Direct Test',
-        text: 'You clicked the button!',
-        foreground: true,
-        trigger: { in: 3, unit: 'second' }
-    });
-    
-    alert('Notification scheduled for 3 seconds from now. Put app in background to see it!');
-};
         timeline.push({
             type: jsPsychHtmlButtonResponse,
             stimulus: function() {
@@ -312,6 +287,9 @@ window.testNotification = function() {
                         <h2>Experiment Complete!</h2>
                         <p>Thank you for participating.</p>
                         <p>Your User ID: <strong>${userId || 'unknown'}</strong></p>
+                        <p style="margin-top: 20px; color: #666;">
+                            Remember: You'll receive a daily reminder at noon to complete your experiment.
+                        </p>
                     </div>
                 `;
             },
