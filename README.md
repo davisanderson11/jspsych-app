@@ -4,7 +4,7 @@ This repository allows experimenters, researchers, and all other users of jsPsyc
 
 ## Creating a new app
 
-Running the following command in your command line / terminal will allow the user to start the creation process for their new app.
+Running the following command in your command line / terminal will allow the user to start the creation process for your new app.
 ```
 npx @jspsych/new-app
 ```
