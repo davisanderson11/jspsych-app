@@ -4,7 +4,9 @@
   "description": "Create a new jsPsych Cordova app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [
     "jspsych",
@@ -27,5 +29,21 @@
     "fs-extra": "^11.1.0",
     "inquirer": "^8.2.5",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "@jest/globals": "^29.5.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "lib/**/*.js",
+      "templates/app/www/js/**/*.js",
+      "!templates/app/www/js/experiments/**"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.js",
+      "**/?(*.)+(spec|test).js"
+    ]
   }
 }
