@@ -67,24 +67,7 @@ function scheduleDailyNotification(userId) {
     }
 }
 
-// Test notification function for debug screen
-window.testNotification = function() {
-    console.log('Testing notification...');
-    
-    if (!window.cordova || !window.cordova.plugins || !window.cordova.plugins.notification) {
-        alert('Notification plugin not available');
-        return;
-    }
-    
-    cordova.plugins.notification.local.schedule({
-        title: 'Test Notification',
-        text: 'This is a test notification!',
-        foreground: true,
-        trigger: { in: 3, unit: 'second' }
-    });
-    
-    alert('Notification scheduled for 3 seconds from now!');
-};
+
 
 // Initialize the app
 async function initializeApp() {
@@ -162,19 +145,7 @@ async function initializeApp() {
             choices: ['Continue']
         });
     }
-    
-    // Add debug notification test screen
-    timeline.push({
-        type: jsPsychHtmlButtonResponse,
-        stimulus: `
-            <h3>Debug: Test Notifications</h3>
-            <button onclick="testNotification()" style="padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                Send Test Notification
-            </button>
-            <p style="font-size: 14px; color: #666;">Test notification will appear in 3 seconds</p>
-        `,
-        choices: ['Continue']
-    });
+
     
     // Add all other experiments
     for (const [name, experiment] of Object.entries(experiments)) {
