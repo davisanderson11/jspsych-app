@@ -17,7 +17,7 @@ After you have navigated to your new app directory, running `npm run android` or
 ## Creating and running experiments
 
 All experiments should be located within a folder of your desired name at `www/js/experiments/YOUR-FOLDER-NAME` from there, creating an `index.js` file within that directory and inputting your code should be all that is necessary. For the format that your JavaScript experiment code should be in, please see `www/js/experiments/sample-experiment/index.js` and feel free to delete the `sample-experiment` folder when you are ready to launch your experiment. After the experiment has been created, the folder name must be listed in `www/js/app.js` at the code segment listed below.
-```
+```js
 const EXPERIMENTS = [
     'profile',
     'sample-experiment',
