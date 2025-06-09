@@ -163,13 +163,11 @@ async function initializeApp() {
         });
     }
     
-    // Add notification test screen
+    // Add debug notification test screen
     timeline.push({
         type: jsPsychHtmlButtonResponse,
         stimulus: `
-            <h3>Notification Settings</h3>
-            <p>Daily reminders have been scheduled for 12:00 PM (noon).</p>
-            <p>Want to test notifications?</p>
+            <h3>Debug: Test Notifications</h3>
             <button onclick="testNotification()" style="padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
                 Send Test Notification
             </button>
@@ -287,9 +285,6 @@ async function initializeApp() {
                         <h2>Experiment Complete!</h2>
                         <p>Thank you for participating.</p>
                         <p>Your User ID: <strong>${userId || 'unknown'}</strong></p>
-                        <p style="margin-top: 20px; color: #666;">
-                            Remember: You'll receive a daily reminder at noon to complete your experiment.
-                        </p>
                     </div>
                 `;
             },
