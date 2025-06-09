@@ -11,3 +11,5 @@ npx @jspsych/new-app
 Upon running this command, the user will be asked to create a name for their new project, which will be used as the name of the directory the app is located in. After inputting the name, the app will be created with Cordova and all of the required plugins installed.
 
 ## Running the app
+
+After you have navigated to your new app directory, running `npm run android` or `npm run ios` from the root of the project will open an Android Studio Emulator instance or an Xcode Simulator instance assuming you have downloaded the necessary applications. Additionally, if you have a device plugged in it will default to running on that device.
