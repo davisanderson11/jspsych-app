@@ -3,9 +3,9 @@
 ## 1. Get Your DataPipe Experiment ID
 
 1. Go to [https://pipe.jspsych.org](https://pipe.jspsych.org)
-2. Sign in with your GitHub account
+2. Sign in or create an account
 3. Create a new experiment or use an existing one
-4. Copy your experiment ID (it looks like: `ABCDEF123456`)
+4. Copy your experiment ID
 
 ## 2. Configure Your App
 
@@ -14,7 +14,7 @@
 
 ```javascript
 export const DataPipeConfig = {
-  experimentId: 'EXPERIMENT_ID', // Replace this!
+  experimentId: 'EXPERIMENT_ID',
   apiUrl: 'https://pipe.jspsych.org/api/data/',
 };
 ```
@@ -23,7 +23,6 @@ export const DataPipeConfig = {
 
 ### Automatic Data Submission
 - Data is automatically sent to DataPipe when the experiment completes
-- Shows a loading spinner during submission
 - Displays success/failure status
 
 ### Offline Support
@@ -34,41 +33,26 @@ export const DataPipeConfig = {
 - The user's ID is included with all data submissions
 - Easy to track participants across sessions
 
-### Device Information
-- Automatically includes device platform, version, and model (on mobile)
-- Helps track which devices participants are using
-
 ## 4. Testing Your Integration
 
-### In Browser
-1. Run `npm run serve`
-2. Complete the experiment
-3. Check DataPipe dashboard for your data
-
 ### On Mobile
-1. Build and run: `npm run android`
+1. Run `npm run android` or `npm run ios`
 2. Complete the experiment
-3. Test offline mode:
-   - Turn off WiFi/data
-   - Complete experiment
-   - Turn connection back on
-   - Reopen app - data should upload
+3. Check DataPipe dashboard and OSF for your data
 
 ## 5. Accessing Your Data
 
-1. Go to your DataPipe experiment dashboard
-2. Click "Download Data" to get a CSV/JSON file
+1. Navigate to your OSF Data Page
+2. Download the data to get a CSV/JSON file
 3. Data includes:
    - All jsPsych trial data
    - User ID
    - Timestamp
-   - Device information
-   - Platform (cordova/web)
 
 ## 6. Troubleshooting
 
 ### Data Not Appearing
-- Check browser console for errors
+- Check console.log for errors
 - Verify your experiment ID is correct
 - Ensure you have internet connection
 
