@@ -446,7 +446,7 @@ describe('NotificationManager', () => {
     });
 
     afterEach(() => {
-      Date.now.mockRestore();
+      jest.spyOn(Date, 'now');
     });
 
     test('should schedule reminders at specified times', () => {
