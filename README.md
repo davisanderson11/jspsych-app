@@ -13,3 +13,15 @@ Upon running this command, the user will be asked to create a name for their new
 ## Running the app
 
 After you have navigated to your new app directory, running `npm run android` or `npm run ios` from the root of the project will open an Android Studio Emulator instance or an Xcode Simulator instance assuming you have downloaded the necessary applications. Additionally, if you have a device plugged in it will default to running on that device.
+
+## Creating and running experiments
+
+All experiments should be located within a folder of your desired name at `www/js/experiments/YOUR-FOLDER-NAME` from there, creating an `index.js` file within that directory and inputting your code should be all that is necessary. For the format that your JavaScript experiment code should be in, please see `www/js/experiments/sample-experiment/index.js` and feel free to delete the `sample-experiment` folder when you are ready to launch your experiment. After the experiment has been created, the folder name must be listed in `www/js/app.js` at the code segment listed below.
+```
+const EXPERIMENTS = [
+    'profile',
+    'sample-experiment',
+    'YOUR-EXPERIMENT-HERE'
+];
+```
+Please feel free to delete `sample-experiment` but do not delete `profile` as it is required for DataPipe integration, data collection, and push notifications.
