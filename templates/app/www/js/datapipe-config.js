@@ -2,9 +2,9 @@
 (function() {
     
     // DataPipe configuration
-    window.DataPipeEnabled = false;
+    window.DataPipeEnabled = false; // Set to true to enable DataPipe
     window.DataPipeConfig = {
-        experimentId: 'EXPERIMENT-ID',
+        experimentId: 'EXPERIMENT-ID', // Your experiment ID
         apiUrl: 'https://pipe.jspsych.org/api/data/',
     };
     
