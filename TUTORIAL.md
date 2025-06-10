@@ -445,32 +445,17 @@ This will:
 
 ## Advanced Features
 
-### Data Collection and Storage
-
-#### Local Data Storage
-Your app automatically saves data locally. To access it:
-
-```javascript
-// Get all data
-const allData = jsPsych.data.get();
-
-// Get specific data
-const reactionData = jsPsych.data.get().filter({task: 'reaction-time'});
-
-// Save data to file
-jsPsych.data.get().localSave('csv', 'experiment-data.csv');
-```
-
-#### DataPipe Integration
+### DataPipe Integration
 For cloud data storage, configure DataPipe:
 
 1. **Set up DataPipe account** at [pipe.jspsych.org](https://pipe.jspsych.org)
-2. **Configure in your experiment**:
+2. **Configure in your datapipe-config.js file**:
    ```javascript
-   jsPsych.data.addProperties({
-       subject_id: 'participant_001',
-       session_id: 'session_001'
-   });
+    window.DataPipeEnabled = true; // Set to true to enable DataPipe
+    window.DataPipeConfig = {
+        experimentId: 'EXPERIMENT-ID', // Your experiment ID
+        apiUrl: 'https://pipe.jspsych.org/api/data/',
+    };
    ```
 
 ### Using Device Sensors
