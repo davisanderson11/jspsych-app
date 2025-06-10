@@ -250,109 +250,107 @@ mkdir www/js/experiments/reaction-time
 Create `www/js/experiments/reaction-time/index.js`:
 
 ```javascript
-/**
- * Simple Reaction Time Experiment
- * Measures how quickly participants respond to visual stimuli
- */
-
-// Define experiment parameters
-const TRIAL_COUNT = 10;
-const MIN_DELAY = 1000; // Minimum delay before stimulus (ms)
-const MAX_DELAY = 3000; // Maximum delay before stimulus (ms)
-
-// Create welcome screen
-const welcome = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `
-        <h1>Reaction Time Experiment</h1>
-        <p>In this experiment, you will see a red circle appear on the screen.</p>
-        <p>Press the button as quickly as possible when you see it.</p>
-        <p>Try to be as fast and accurate as possible.</p>
-    `,
-    choices: ['Start Experiment'],
-    post_trial_gap: 500
-};
-
-// Create instructions
-const instructions = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `
-        <h2>Instructions</h2>
-        <p>1. You will see a white screen</p>
-        <p>2. After a random delay, a red circle will appear</p>
-        <p>3. Press the "React!" button as quickly as possible</p>
-        <p>4. You will complete ${TRIAL_COUNT} trials</p>
-        <p>Ready to begin?</p>
-    `,
-    choices: ['I\'m Ready!'],
-    post_trial_gap: 500
-};
-
-// Create fixation cross
-const fixation = {
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<div style="font-size: 60px;">+</div>',
-    choices: "NO_KEYS",
-    trial_duration: function() {
-        return Math.floor(Math.random() * (MAX_DELAY - MIN_DELAY)) + MIN_DELAY;
-    }
-};
-
-// Create reaction time trial
-const reactionTrial = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `
-        <div style="width: 200px; height: 200px; background-color: red; 
-                    border-radius: 50%; margin: 50px auto;"></div>
-    `,
-    choices: ['React!'],
-    data: {
-        task: 'reaction-time',
-        trial_type: 'stimulus'
-    },
-    on_finish: function(data) {
-        // Calculate reaction time
-        data.reaction_time = data.rt;
-        console.log('Reaction time:', data.rt, 'ms');
-    }
-};
-
-// Create trial sequence (fixation + stimulus)
-const trialSequence = {
-    timeline: [fixation, reactionTrial],
-    repetitions: TRIAL_COUNT
-};
-
-// Create results screen
-const results = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: function() {
-        // Calculate average reaction time
-        const reactionTimeData = jsPsych.data.get().filter({task: 'reaction-time'});
-        const avgRT = Math.round(reactionTimeData.select('rt').mean());
-        const fastestRT = Math.round(reactionTimeData.select('rt').min());
+// Test experiment - self-registering version
+(function() {
+   
+    function run(jsPsych) {
+        const timeline = [];
         
-        return `
-            <h2>Results</h2>
-            <p>You completed ${TRIAL_COUNT} trials!</p>
-            <p><strong>Average reaction time:</strong> ${avgRT} ms</p>
-            <p><strong>Fastest reaction time:</strong> ${fastestRT} ms</p>
-            <p>Thank you for participating!</p>
-        `;
-    },
-    choices: ['Finish']
-};
-
-// Create the experiment timeline
-const timeline = [
-    welcome,
-    instructions,
-    trialSequence,
-    results
-];
-
-// Initialize and run the experiment
-jsPsych.run(timeline);
+        // Define experiment parameters
+        const TRIAL_COUNT = 10;
+        const MIN_DELAY = 1000;
+        const MAX_DELAY = 3000;
+       
+        const welcome = {
+            type: jsPsychHtmlButtonResponse,
+            stimulus: `
+                <h1>Reaction Time Experiment</h1>
+                <p>In this experiment, you will see a red circle appear on the screen.</p>
+                <p>Press the button as quickly as possible when you see it.</p>
+                <p>Try to be as fast and accurate as possible.</p>
+            `,
+            choices: ['Start Experiment'],
+            post_trial_gap: 500
+        };
+        timeline.push(welcome);
+        
+        const instructions = {
+            type: jsPsychHtmlButtonResponse,
+            stimulus: `
+                <h2>Instructions</h2>
+                <p>1. You will see a white screen</p>
+                <p>2. After a random delay, a red circle will appear</p>
+                <p>3. Press the "React!" button as quickly as possible</p>
+                <p>4. You will complete ${TRIAL_COUNT} trials</p>
+                <p>Ready to begin?</p>
+            `,
+            choices: ['I\'m Ready!'],
+            post_trial_gap: 500
+        };
+        timeline.push(instructions);
+        
+        const fixation = {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: '<div style="font-size: 60px;">+</div>',
+            choices: "NO_KEYS",
+            trial_duration: function() {
+                return Math.floor(Math.random() * (MAX_DELAY - MIN_DELAY)) + MIN_DELAY;
+            }
+        };
+        
+        const reactionTrial = {
+            type: jsPsychHtmlButtonResponse,
+            stimulus: `
+                <div style="width: 200px; height: 200px; background-color: red; 
+                            border-radius: 50%; margin: 50px auto;"></div>
+            `,
+            choices: ['React!'],
+            data: {
+                task: 'reaction-time',
+                trial_type: 'stimulus'
+            },
+            on_finish: function(data) {
+                data.reaction_time = data.rt;
+                console.log('Reaction time:', data.rt, 'ms');
+            }
+        };
+        
+        const trialSequence = {
+            timeline: [fixation, reactionTrial],
+            repetitions: TRIAL_COUNT
+        };
+        timeline.push(trialSequence);
+        
+        const results = {
+            type: jsPsychHtmlButtonResponse,
+            stimulus: function() {
+                const reactionTimeData = jsPsych.data.get().filter({task: 'reaction-time'});
+                const avgRT = Math.round(reactionTimeData.select('rt').mean());
+                const fastestRT = Math.round(reactionTimeData.select('rt').min());
+                
+                return `
+                    <h2>Results</h2>
+                    <p>You completed ${TRIAL_COUNT} trials!</p>
+                    <p><strong>Average reaction time:</strong> ${avgRT} ms</p>
+                    <p><strong>Fastest reaction time:</strong> ${fastestRT} ms</p>
+                    <p>Thank you for participating!</p>
+                `;
+            },
+            choices: ['Finish']
+        };
+        timeline.push(results);
+       
+        return timeline;
+    }
+   
+    // Register this experiment
+    if (window.ExperimentLoader) {
+        window.ExperimentLoader.register('test', {
+            run: run
+        });
+    }
+   
+})();
 ```
 
 ### Step 3: Add Your Experiment to the App
@@ -393,7 +391,7 @@ Before testing on mobile, verify your experiment works in a web browser:
 
 2. **Start the server** from your project directory:
    ```bash
-   live-server www/
+   npx live-server www/
    ```
 
 3. **Open your browser** to the displayed URL (usually `http://localhost:8080`)
