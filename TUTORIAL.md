@@ -22,7 +22,7 @@ This comprehensive tutorial will guide you through creating mobile psychology ex
 ### Required Knowledge
 - **Basic understanding of JavaScript** - You should be comfortable with variables, functions, and basic programming concepts
 - **Familiarity with HTML** - Understanding how to create basic web pages
-- **Research background** - Knowledge of experimental psychology or behavioral research principles
+- **Research or experimentation background** - Knowledge of experimental psychology or behavioral research principles
 
 ### Required Software
 Before starting, ensure you have the following installed:
