@@ -475,19 +475,6 @@ const accelerometerTrial = {
 };
 ```
 
-#### Camera Access
-```javascript
-const cameraButton = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: '<p>Take a photo</p>',
-    choices: ['Take Photo'],
-    on_finish: function() {
-        // Camera functionality would be implemented here
-        // Requires additional Cordova plugins
-    }
-};
-```
-
 ### Customizing App Appearance
 
 #### Changing App Icon
