@@ -1,6 +1,6 @@
 {
   "name": "@jspsych/new-app",
-  "version": "1.0.4",
+  "version": "1.0.0",
   "description": "Create a new jsPsych Cordova app",
   "main": "index.js",
   "scripts": {
