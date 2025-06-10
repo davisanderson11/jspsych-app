@@ -125,7 +125,8 @@ jspsych-app combines these technologies to create mobile psychology experiments 
 #### For iOS (Mac only):
 1. **Install Xcode**
    - Download from Mac App Store (free)
-   - Install may take 1-2 hours
+   - Navigate to Simulators and Devices
+   - Install iOS 18.5 (may take 1-2 hours)
    - Accept license agreements
 
 2. **Install Command Line Tools**
@@ -188,7 +189,7 @@ cd stroop-experiment
 
 ## Understanding the Project Structure
 
-Let's explore what was created:
+Let's explore some of what was created:
 
 ```
 stroop-experiment/
