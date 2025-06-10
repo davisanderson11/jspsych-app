@@ -478,7 +478,7 @@ const accelerometerTrial = {
 ### Customizing App Appearance
 
 #### Changing App Icon
-1. Replace files in `www/assets/icon/`
+1. Create a new folder called `www/assets/icon` and put your image there
 2. Update `config.xml` icon references
 3. Rebuild the app
 
@@ -564,6 +564,7 @@ body {
 1. **Check EXPERIMENTS array** in `www/js/app.js`
 2. **Verify folder name** matches array entry exactly
 3. **Ensure index.js exists** in experiment folder
+4. **Ensure JavaScript code** in `YOUR-EXPERIMENT/index.js` runs properly
 
 **Example:**
 ```javascript
@@ -623,10 +624,10 @@ const trial = {
 **Symptoms:** Build succeeds but app won't install on iOS device
 
 **Solutions:**
-1. **Check provisioning profile**
-2. **Verify Apple Developer Account** settings
-3. **Try iOS Simulator** first
-4. **Check device compatibility**
+1. **Check** provisioning profile
+2. **Verify** Apple Developer Account settings
+3. **Try** iOS Simulator first
+4. **Check** device compatibility
 
 ### Debug Mode
 
@@ -777,9 +778,9 @@ const saveData = {
 ## Additional Resources
 
 ### Documentation
-- [jsPsych Documentation](https://www.jspsych.org/7.3/)
+- [jsPsych Documentation](https://www.jspsych.org/v8/)
 - [Apache Cordova Documentation](https://cordova.apache.org/docs/en/latest/)
-- [DataPipe Documentation](https://pipe.jspsych.org/docs/)
+- [DataPipe Documentation](https://pipe.jspsych.org/api-docs/)
 
 ### Tutorials and Examples
 - [jsPsych Tutorial](https://www.jspsych.org/7.3/tutorials/)
