@@ -37,4 +37,4 @@ If the app loads but simply has a white screen on startup, it is likely you are 
     <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@2.0.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-call-function@2.0.0"></script>
 ```
-If the app still does not load after this, open Logcat in Android Studio or Safari to debug Xcode to view the console log.
+If the app still does not load after this, open Logcat in Android Studio or use Safari to debug Xcode and view the console log.
